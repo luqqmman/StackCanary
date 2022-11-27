@@ -1,0 +1,13 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <div class="container">
+        {% for answer in answers %}
+            <div class="question">
+                <h1>{{question.title}}</h1>
+                <p>{{question.description}}</p>
+            </div>
+        {% empty %}
+            <h1>You have no answer yet</h1>
+        {% endfor %}
+    </div>
+{% endblock content %}

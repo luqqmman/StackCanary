@@ -1,0 +1,13 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <div class="container">
+        {% for question in questions %}
+            <div class="question">
+                <h1>{{question.title}}</h1>
+                <p>{{question.description}}</p>
+            </div>
+        {% empty %}
+            <h1>You have no question yet</h1>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'forum/base.css' %}">
+
+    </head>
+    <title>Stackoverflow</title>
+    <body>
+        <nav class="navbar">
+            <ul class="navbar--list">
+                <li class="navbar--item">
+                    <a class="navbar--link" href="{% url 'forum-index' %}">Home</a>
+                </li>
+                <li class="navbar--item">
+                    <a class="navbar--link" href="{% url 'forum-my-question' %}">My questions</a>
+                </li>
+                <li class="navbar--item">
+                    <a class="navbar--link" href="{% url 'forum-my-answer' %}">My answers</a>
+                </li>
+                <li class="navbar--item">
+                    <a class="navbar--link" href="{% url 'forum-my-comment' %}">My comments</a>
+                </li>
+                <li class="navbar--item">
+                    <a class="navbar--link" href="{% url 'forum-login' %}">Login</a>
+                </li>
+            </ul>
+        </nav>
+        <main class="main">
+            {% block content %}
+            {% endblock content %}
+        </main>
+    </body>
+
+</html>

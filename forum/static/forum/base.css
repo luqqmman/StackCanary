@@ -1,0 +1,94 @@
+
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+}
+
+.main {
+    display: block;
+    width: 60%;
+    height: 100%;
+    margin: 2em auto;
+}
+
+.navbar {
+    font-size: 0.85em;
+    background-color: rebeccapurple;
+}
+
+.navbar--list {
+    margin: 0 auto;
+    padding: 0.75em 0;
+    width: 60%;
+    display: flex;
+}
+
+.navbar--item {
+    list-style: none;
+    margin-right: 2em;
+}
+
+.navbar--link {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar--link:hover {
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.question {
+    padding: 1em 2em;
+    margin: 1em 0;
+    background-color: #FEFBF3;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.question:hover {
+    position: relative;
+    left: 1em;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin: 1em auto;
+}
+
+.form--input {
+    font-size: 1.2em;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    margin-bottom: 1em;
+}
+
+.form--title {
+    text-align: center;
+}
+
+.form--button {
+    border-radius: 5px;
+    border: 1px solid rebeccapurple;
+    padding: 1em;
+    background-color: rebeccapurple;
+    color: white;
+}
+
+.form--button:hover{
+    background-color: white;
+    color: rebeccapurple;
+}
