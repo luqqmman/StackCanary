@@ -1,10 +1,11 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div class="container">
-        {% for comment in comments %}
+        {% for comment in komentar %}
             <div class="question">
-                <h1>{{question.title}}</h1>
-                <p>{{question.description}}</p>
+                <h1>{{comment.judul}}</h1>
+                <p>{{comment.konten}}</p>
+                <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
             </div>
         {% empty %}
             <h1>You have no comment yet</h1>

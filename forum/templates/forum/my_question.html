@@ -1,10 +1,12 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div class="container">
-        {% for question in questions %}
+        {% for question in pertanyaan %}
             <div class="question">
-                <h1>{{question.title}}</h1>
-                <p>{{question.description}}</p>
+                <h1>{{question.judul}}</h1>
+                <p>{{question.konten}}</p>
+                <pre>{{question.snippet}}</pre>
+                <p>Posted by {{question.author}} at {{question.waktu_upload}}</p>
             </div>
         {% empty %}
             <h1>You have no question yet</h1>

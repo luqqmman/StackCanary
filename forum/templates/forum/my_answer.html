@@ -1,10 +1,12 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div class="container">
-        {% for answer in answers %}
+        {% for answer in jawaban %}
             <div class="question">
-                <h1>{{question.title}}</h1>
-                <p>{{question.description}}</p>
+                <h1>{{answer.judul}}</h1>
+                <p>{{answer.konten}}</p>
+                <pre>{{answer.snippet}}</pre>
+                <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
             </div>
         {% empty %}
             <h1>You have no answer yet</h1>

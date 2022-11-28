@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Pertanyaan, Jawaban, Komentar
 
-# Register your models here.
+
+admin.site.register(Pertanyaan)
+admin.site.register(Jawaban)
+admin.site.register(Komentar)

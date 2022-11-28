@@ -1,0 +1,9 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <h3>You have been logged out successfully</h3>
+    <div>
+        <small>
+            <a href="{% url 'login' %}">Log In again?</a>
+        </small>
+    </div>
+{% endblock content %}

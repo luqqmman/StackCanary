@@ -8,24 +8,46 @@
     <body>
         <nav class="navbar">
             <ul class="navbar--list">
+                
                 <li class="navbar--item">
                     <a class="navbar--link" href="{% url 'forum-index' %}">Home</a>
                 </li>
-                <li class="navbar--item">
-                    <a class="navbar--link" href="{% url 'forum-my-question' %}">My questions</a>
-                </li>
-                <li class="navbar--item">
-                    <a class="navbar--link" href="{% url 'forum-my-answer' %}">My answers</a>
-                </li>
-                <li class="navbar--item">
-                    <a class="navbar--link" href="{% url 'forum-my-comment' %}">My comments</a>
-                </li>
-                <li class="navbar--item">
-                    <a class="navbar--link" href="{% url 'forum-login' %}">Login</a>
-                </li>
+
+                {% if user.is_authenticated %}
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'forum-my-question' %}">My questions</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'forum-my-answer' %}">My answers</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'forum-my-comment' %}">My comments</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
         <main class="main">
+            {% if messages %}
+                {% for message in messages %}
+                    <div>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
             {% block content %}
             {% endblock content %}
         </main>

@@ -1,0 +1,20 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Login here</legend>
+                {{ form.as_p }}
+            </fieldset>
+            <div>
+                <button type="submit">Login</button>
+            </div>
+        </form>
+        <div>
+            <small>
+                No account yet? <a href="{% url 'register' %}">Sign Up Here</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}
