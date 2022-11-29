@@ -1,6 +1,7 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div class="container">
+        <h1>My Comments</h1>
         {% for comment in komentar %}
             <div class="question">
                 <h1>{{comment.judul}}</h1>
