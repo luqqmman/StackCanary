@@ -8,23 +8,26 @@
     <body>
         <nav class="navbar">
             <ul class="navbar--list">
-                
+
                 <li class="navbar--item">
                     <a class="navbar--link" href="{% url 'forum-index' %}">Home</a>
                 </li>
 
                 {% if user.is_authenticated %}
                     <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-question' %}">My questions</a>
+                        <a class="navbar--link" href="{% url 'forum-my-questions' %}">My questions</a>
                     </li>
                     <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-answer' %}">My answers</a>
+                        <a class="navbar--link" href="{% url 'forum-my-answers' %}">My answers</a>
                     </li>
                     <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-comment' %}">My comments</a>
+                        <a class="navbar--link" href="{% url 'forum-my-comments' %}">My comments</a>
                     </li>
                     <li class="navbar--item">
                         <a class="navbar--link" href="{% url 'profile' %}">Profile</a>
+                    </li>
+                    <li class="navbar--item">
+                        <a class="navbar--link" href="{% url 'forum-question-create' %}">Create Post</a>
                     </li>
                     <li class="navbar--item">
                         <a class="navbar--link" href="{% url 'logout' %}">Logout</a>
