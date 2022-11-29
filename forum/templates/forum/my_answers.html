@@ -1,9 +1,8 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    <div class="container">
         <h1>My Answers</h1>
         {% for answer in jawaban %}
-            <div class="question">
+            <div class="content-section">
                 <h1>{{answer.judul}}</h1>
                 <p>{{answer.konten}}</p>
                 <pre>{{answer.snippet}}</pre>
@@ -12,5 +11,4 @@
         {% empty %}
             <h1>You have no answer yet</h1>
         {% endfor %}
-    </div>
 {% endblock content %}

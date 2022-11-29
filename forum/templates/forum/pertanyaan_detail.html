@@ -1,10 +1,13 @@
 {% extends "forum/base.html" %}
 {% block content %}
+    <div class="content-section">
     <div class="container">
         <div class="question">
             <h1>{{object.judul}}</h1>
             <p>{{object.konten}}</p>
-            <pre>{{object.snippet}}</pre>
+            {% if object.snippet %}
+                <pre class="content-section code">{{object.snippet}}</pre>
+            {% endif %}
             <p>Posted by {{object.author}} at {{object.waktu_upload}}</p>
         </div>
     </div>
@@ -14,7 +17,6 @@
             <p>{{comment.konten}}</p>
             <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
         </div>
-    {% empty %}
-        <h1>You have no comment yet</h1>
     {% endfor %}
+    </div>
 {% endblock content %}

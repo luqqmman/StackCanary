@@ -1,14 +1,14 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div>
-        <form method="POST">
+        <form class="content-section border-secondary" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Make a question</legend>
                 {{ form.as_p }}
             </fieldset>
             <div>
-                <button type="submit">Post</button>
+                <button class="btn btn-outline-primary" type="submit">Post</button>
             </div>
         </form>
     </div>

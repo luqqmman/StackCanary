@@ -30,7 +30,7 @@ ul {
     color: #cbd5db;
     background-color: #282d35;
     padding: 10px 20px;
-    border: 1px solid #cbd5db;
+    border: 1px solid #555;
     border-radius: 3px;
     margin-bottom: 20px;
 }
@@ -45,7 +45,7 @@ ul {
 }
 
 a.article-title:hover {
-    color: #61dafb;
+    color: #0275d8 ;
 }
 
 .article-content {
@@ -60,13 +60,13 @@ a.article-title:hover {
 }
 
 .article-metadata {
-    padding-bottom: 1px;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #e3e3e3
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #555;
 }
 
 .article-metadata a:hover {
-    color: #333;
+    color: #fafafa;
     text-decoration: none;
 }
 
@@ -96,5 +96,10 @@ a.article-title:hover {
 }
 
 .brd-btm {
-    border-bottom: 2px solid #333333;
+    border-bottom: 1px solid #555;
+}
+
+.code {
+    max-height: 500px;
+    overflow: auto;
 }

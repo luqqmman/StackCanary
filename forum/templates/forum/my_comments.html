@@ -1,9 +1,8 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    <div class="container">
         <h1>My Comments</h1>
         {% for comment in komentar %}
-            <div class="question">
+            <div class="content-section">
                 <h1>{{comment.judul}}</h1>
                 <p>{{comment.konten}}</p>
                 <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
@@ -11,5 +10,4 @@
         {% empty %}
             <h1>You have no comment yet</h1>
         {% endfor %}
-    </div>
 {% endblock content %}

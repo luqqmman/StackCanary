@@ -23,7 +23,7 @@
                         <li class="nav-item"><a href="{% url 'forum-my-answers' %}" class="nav-link">My answer</a></li>
                         <li class="nav-item"><a href="{% url 'forum-my-comments' %}" class="nav-link">My comments</a></li>
                         <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
-                        <li class="nav-item"><a href="{% url 'forum-question-create' %}" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="{% url 'forum-question-create' %}" class="nav-link">Create Post</a></li>
                         <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
                     {% else %}
                         <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
@@ -55,7 +55,7 @@
                         <form class="mb-2" method="POST" target="{% url 'forum-index' %}">
                             {% csrf_token %}
                             <input type="text" class="form-control mb-3" placeholder="enter a keyword">
-                            <button class="btn btn-primary">search</button>
+                            <button class="btn btn-outline-primary">search</button>
                         </form>
                     </div>
                 </div>
