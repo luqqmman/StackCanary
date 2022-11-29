@@ -1,56 +1,64 @@
 {% load static %}
 <html>
     <head>
-        <link rel="stylesheet" href="{% static 'forum/base.css' %}">
-
+        <link rel="stylesheet" href="{% static 'forum/base.css' %}?{% now 'U' %}">
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <title>StackCanary</title>
     </head>
-    <title>Stackoverflow</title>
-    <body>
-        <nav class="navbar">
-            <ul class="navbar--list">
-                
-                <li class="navbar--item">
-                    <a class="navbar--link" href="{% url 'forum-index' %}">Home</a>
-                </li>
-
-                {% if user.is_authenticated %}
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-question' %}">My questions</a>
-                    </li>
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-answer' %}">My answers</a>
-                    </li>
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'forum-my-comment' %}">My comments</a>
-                    </li>
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'profile' %}">Profile</a>
-                    </li>
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'logout' %}">Logout</a>
-                    </li>
-                {% else %}
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="navbar--item">
-                        <a class="navbar--link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-            </ul>
+    <body class="bg-dark-one">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark-two mb-4 brd-btm">
+           <div class="container">
+                <a href="{% url 'forum-index' %}" class="navbar-brand">StackCanary</a>
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#mnav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mnav">
+                    <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a href="{% url 'forum-index' %}" class="nav-link">Forum</a></li>
+                        <li class="nav-item"><a href="{% url 'forum-my-question' %}" class="nav-link">My questions</a></li>
+                        <li class="nav-item"><a href="{% url 'forum-my-answer' %}" class="nav-link">My answer</a></li>
+                        <li class="nav-item"><a href="{% url 'forum-my-comment' %}" class="nav-link">My comments</a></li>
+                        <li class="nav-item"><a href="{% url 'profile' %}" class="nav-link">Profile</a></li>
+                        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
         </nav>
-        <main class="main">
+
+        <main role="main" class="container">
             {% if messages %}
                 {% for message in messages %}
-                    <div>
+                    <div class="alert alert-{{message.tags}} mb-2">
                         {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
-
-            {% block content %}
-            {% endblock content %}
-        </main>
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="col-md-4">
+                    <div class="content-section">
+                        {% if user.is_authenticated %}
+                            <h2>Logged in as {{user.username}}</h2>
+                        {% endif %}
+                        <h4 class="mb-3">Search question</h4>
+                        <form class="mb-2" method="POST" target="{% url 'forum-index' %}">
+                            {% csrf_token %}
+                            <input type="text" class="form-control mb-3" placeholder="enter a keyword">
+                            <button class="btn btn-primary">search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </main>
     </body>
-
 </html>

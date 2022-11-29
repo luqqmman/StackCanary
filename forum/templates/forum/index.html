@@ -1,16 +1,21 @@
 {% extends "forum/base.html" %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Hello, {{user.username}}</h1>
-    {% endif %}
-    <div class="container">
-        {% for question in pertanyaan %}
-            <div class="question">
-                <h1>{{question.judul}}</h1>
-                <p>{{question.konten}}</p>
-                <pre>{{question.snippet}}</pre>
-                <p>Posted by {{question.author}} at {{question.waktu_upload}}</p>
+    {% for question in pertanyaan %}
+    <article>
+        <div class="content-section">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ question.author }}</a>
+                <small class="text-muted">{{ question.waktu_upload }}</small>
             </div>
-        {% endfor %}
-    </div>
+            <h2><a class="article-title" href="#">{{ question.judul }}</a></h2>
+            <p class="article-content">{{ question.konten|stringformat:".100s" }}</p>
+        </div>
+    </article>
+        <!-- <div class="question">
+            <h1>{{question.judul}}</h1>
+            <p>{{question.konten}}</p>
+            <pre>{{question.snippet}}</pre>
+            <p>Posted by {{question.author}} at {{question.waktu_upload}}</p>
+        </div> -->
+    {% endfor %} 
 {% endblock content %}
