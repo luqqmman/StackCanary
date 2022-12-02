@@ -8,11 +8,9 @@
             </div>
             <h2><a class="article-title" href="{% url 'forum-question-detail' question.id %}">{{ question.judul }}</a></h2>
             <p class="article-content">{{ question.konten|stringformat:".100s" }}</p>
-            <a class="btn btn-outline-primary mr-2" href="{% url 'forum-question-update' question.id %}">Edit</a>
-            <a class="btn btn-outline-danger" href="{% url 'forum-question-delete' question.id %}">Delete</a>
         </article>
 
     {% empty %}
-        <h1>You have no question yet</h1>
+        <h1>question not found</h1>
     {% endfor %}
 {% endblock content %}

@@ -1,7 +1,7 @@
 {% extends "forum/base.html" %}
 {% block content %}
         {% for question in pertanyaan %}
-            <article class="content-section">
+            <article class="content-section zoom">
                     <div class="article-metadata">
                         <a class="mr-2" href="#">{{ question.author }}</a>
                         <small class="text-muted">{{ question.waktu_upload }}</small>

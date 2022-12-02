@@ -2,7 +2,7 @@
 {% block content %}
         <h1>My Comments</h1>
         {% for comment in komentar %}
-            <div class="content-section">
+            <div class="content-section zoom">
                 <h1>{{comment.judul}}</h1>
                 <p>{{comment.konten}}</p>
                 <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>

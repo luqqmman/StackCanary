@@ -11,4 +11,5 @@ urlpatterns = [
     path('my_questions/', views.my_questions, name='forum-my-questions'),
     path('my_answers/', views.my_answers, name='forum-my-answers'),
     path('my_comments/', views.my_comments, name='forum-my-comments'),
+    path('search/', views.search, name='forum-search'),
 ]

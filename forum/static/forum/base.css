@@ -1,6 +1,3 @@
-body {
-    color: #fafafa;
-}
 
 h1, h2, h3, h4, h5, h6 {
     color: #f9f9f9;
@@ -10,22 +7,17 @@ ul {
     margin: 0;
 }
 
-.bg-steel {
-    background-color: #5f788a;
-}
-
-.site-header .navbar-nav .nav-link {
+/* .site-header .navbar-nav .nav-link {
     color: #cbd5db;
-}
+} */
 
-.site-header .navbar-nav .nav-link:hover {
+/* .site-header .navbar-nav .nav-link:hover {
     color: #ffffff;
-}
+} */
 
-.site-header .navbar-nav .nav-link.active {
+/* .site-header .navbar-nav .nav-link:active {
     font-weight: 500;
-}
-
+} */
 .content-section {
     color: #cbd5db;
     background-color: #282d35;
@@ -33,10 +25,12 @@ ul {
     border: 1px solid #555;
     border-radius: 3px;
     margin-bottom: 20px;
+    transition: all .2s ease-in-out;
 }
 
-.cblue {
-    color: #61dafb;
+
+.zoom:hover {
+    transform: scale(1.02);
 }
 
 .article-title {
@@ -53,12 +47,6 @@ a.article-title:hover {
     color: #fafafa;
 }
 
-.article-img {
-    height: 65px;
-    width: 65px;
-    margin-right: 16px;
-}
-
 .article-metadata {
     padding-bottom: 3px;
     margin-bottom: 8px;
@@ -68,23 +56,6 @@ a.article-title:hover {
 .article-metadata a:hover {
     color: #fafafa;
     text-decoration: none;
-}
-
-.article-svg {
-    width: 25px;
-    height: 25px;
-    vertical-align: middle;
-}
-
-.account-img {
-    height: 125px;
-    width: 125px;
-    margin-right: 20px;
-    margin-bottom: 16px;
-}
-
-.account-heading {
-    font-size: 2.5rem;
 }
 
 .bg-dark-one {
@@ -100,6 +71,7 @@ a.article-title:hover {
 }
 
 .code {
+    font-size: 0.8em;
     max-height: 500px;
     overflow: auto;
 }

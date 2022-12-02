@@ -18,6 +18,17 @@ def questions(request):
     }
     return render(request, 'forum/questions.html')
 
+
+def search(request):
+    if request.method == 'POST':
+        context = {
+            'pertanyaan': Pertanyaan.objects.filter(judul__icontains=request.POST['search']),
+        }
+        print(context)
+        return render(request, 'forum/search.html', context)
+
+
+    
 # class based
 
 class QuestionListView(ListView):

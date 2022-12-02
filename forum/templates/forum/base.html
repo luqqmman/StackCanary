@@ -52,10 +52,10 @@
                             <h2>Logged in as {{user.username}}</h2>
                         {% endif %}
                         <h4 class="mb-3">Search question</h4>
-                        <form class="mb-2" method="POST" target="{% url 'forum-index' %}">
+                        <form class="mb-2" method="POST" action="{% url 'forum-search' %}">
                             {% csrf_token %}
-                            <input type="text" class="form-control mb-3" placeholder="enter a keyword">
-                            <button class="btn btn-outline-primary">search</button>
+                            <input type="text" class="form-control mb-3" placeholder="enter a keyword" name="search">
+                            <button class="btn btn-outline-primary" type="submit">search</button>
                         </form>
                     </div>
                 </div>
