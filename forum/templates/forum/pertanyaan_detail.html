@@ -3,20 +3,61 @@
     <div class="content-section">
     <div class="container">
         <div class="question">
-            <h1>{{object.judul}}</h1>
-            <p>{{object.konten}}</p>
-            {% if object.snippet %}
-                <pre class="content-section code">{{object.snippet}}</pre>
+            <h1>{{pertanyaan.judul}}</h1>
+            <p>{{pertanyaan.konten}}</p>
+            {% if pertanyaan.snippet %}
+                <pre class="content-section code">{{pertanyaan.snippet}}</pre>
             {% endif %}
-            <p>Posted by {{object.author}} at {{object.waktu_upload}}</p>
+            <p>Posted by {{pertanyaan.author}} at {{pertanyaan.waktu_upload}}</p>
         </div>
+
+        {% if user.is_authenticated %}
+            <div class=" justify-content-center mt-3 mb-5">
+                <form method="POST" class="content-section" action="{% url 'forum-question-detail' pertanyaan.id %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+
     </div>
     {% for comment in komentar %}
         <div class="question">
-            <h1>{{comment.judul}}</h1>
             <p>{{comment.konten}}</p>
             <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
         </div>
     {% endfor %}
     </div>
+
+    <div class="content-section">
+        <strong>Answers</strong>
+    </div>
+
+    <div class="content-section">
+        {% for answer in jawaban %}
+            <p>{{answer.konten}}</p>
+            {% if answer.snippet %}
+                <pre class="content-section code">{{answer.snippet}}</pre>
+            {% endif %}
+            <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
+        {% endfor %}
+    </div>
+
+    {% if user.is_authenticated %}
+        <div class=" justify-content-center mt-3 mb-5">
+            <h3>Wanna join the discussion?</h3>
+            <form method="POST" class="content-section" action="{% url 'forum-question-detail' pertanyaan.id %}">
+                <p>Create your answer down here</p>
+                {% csrf_token %}
+                {{ answer_form.as_p }}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" type="submit">Submit Answer</button>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+
 {% endblock content %}
