@@ -2,11 +2,24 @@
 {% block content %}
         <h1>My Comments</h1>
         {% for comment in komentar %}
-            <div class="content-section zoom">
-                <h1>{{comment.judul}}</h1>
-                <p>{{comment.konten}}</p>
-                <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
-            </div>
+            {% with pertanyaan=comment.pertanyaan_asal %}
+                <div class="content-section zoom">
+                    <div>
+                        <h1>{{comment.judul}}</h1>
+                        <p>{{comment.konten}}</p>
+                        <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
+                    </div>
+                    <h4>Original Question:</h4>
+                    <div class="content-section">
+                        <div class="article-metadata">
+                            <a class="mr-2" href="#">{{ pertanyaan.author }}</a>
+                            <small class="text-muted">{{ pertanyaan.waktu_upload }}</small>
+                        </div>
+                        <h2><a class="article-title" href="{% url 'forum-question-detail' pertanyaan.id %}">{{ pertanyaan.judul }}</a></h2>
+                        <p class="article-content">{{ pertanyaan.konten|stringformat:".100s" }}</p>
+                    </div>
+                </div>
+            {% endwith %}
         {% empty %}
             <h1>You have no comment yet</h1>
         {% endfor %}

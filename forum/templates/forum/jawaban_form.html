@@ -1,7 +1,18 @@
 {% extends "forum/base.html" %}
 {% block content %}
+    <div class="content-section">
+        <div class="container">
+            <div class="question">
+                <h1>{{pertanyaan.judul}}</h1>
+                <p>{{pertanyaan.konten}}</p>
+                {% if pertanyaan.snippet %}
+                    <pre class="content-section code">{{pertanyaan.snippet}}</pre>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     <div>
-        <form class="content-section border-secondary" method="POST">
+        <form class="content-section border-secondary" action="{% url 'forum-answer-create' question_pk %}" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Make an answer</legend>

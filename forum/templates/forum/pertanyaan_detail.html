@@ -32,8 +32,11 @@
     {% endfor %}
     </div>
 
-    <div class="content-section">
-        <strong>Answers</strong>
+    <div>
+        <h3>Discussions</h3>
+        <div class="gap-2">
+            <button class="btn btn-outline-primary"><a href="{% url 'forum-answer-create' pertanyaan.id %}">Add New Answer</a></button>
+        </div>
     </div>
 
     <div class="content-section">
@@ -45,19 +48,5 @@
             <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
         {% endfor %}
     </div>
-
-    {% if user.is_authenticated %}
-        <div class=" justify-content-center mt-3 mb-5">
-            <h3>Wanna join the discussion?</h3>
-            <form method="POST" class="content-section" action="{% url 'forum-question-detail' pertanyaan.id %}">
-                <p>Create your answer down here</p>
-                {% csrf_token %}
-                {{ answer_form.as_p }}
-                <div class="d-grid gap-2">
-                    <button class="btn btn-outline-primary" type="submit">Submit Answer</button>
-                </div>
-            </form>
-        </div>
-    {% endif %}
 
 {% endblock content %}

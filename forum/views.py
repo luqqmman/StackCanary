@@ -1,23 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin 
 from .models import Pertanyaan, Jawaban, Komentar
 from .forms import CommentForm, AnswerForm
-
-
-def index(request):
-    context = {
-        'pertanyaan': Pertanyaan.objects.all()
-    }
-    return render(request, 'forum/index.html', context)
-
-def questions(request):
-    context = {
-        'pertanyaan': Pertanyaan.objects.all() # pertanyaan yg diklik
-    }
-    return render(request, 'forum/questions.html')
 
 
 def search(request):
@@ -41,9 +28,9 @@ class QuestionListView(ListView):
 class QuestionDetailView(View):
     def get(self, request, pk, *args, **kwargs):
         question = Pertanyaan.objects.get(pk=pk)
+        self.current_question = question
 
         comment_form = CommentForm()
-        answer_form = AnswerForm()
         comment = Komentar.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
         answer = Jawaban.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
 
@@ -52,20 +39,12 @@ class QuestionDetailView(View):
             'form': comment_form,
             'komentar': comment,
             'jawaban': answer,
-            'answer_form': answer_form,
         }
 
         return render(request, 'forum/pertanyaan_detail.html', context)
 
     def post(self, request, pk, *args, **kwargs):
         question = Pertanyaan.objects.get(pk=pk)
-
-        answer_form = AnswerForm(request.POST)
-        if answer_form.is_valid():
-            new_answer = answer_form.save(commit=False)
-            new_answer.author = request.user
-            new_answer.pertanyaan_asal = question
-            new_answer.save()
 
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
@@ -75,7 +54,6 @@ class QuestionDetailView(View):
             new_comment.save()
 
         comment_form = CommentForm()
-        answer_form = AnswerForm()
 
         comment = Komentar.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
         answer = Jawaban.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
@@ -85,7 +63,6 @@ class QuestionDetailView(View):
             'form': comment_form,
             'komentar': comment,
             'jawaban': answer,
-            'answer_form': answer_form,
         }
 
         return render(request, 'forum/pertanyaan_detail.html', context)
@@ -122,56 +99,26 @@ class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
-'''
-class AnswerCreateView(LoginRequiredMixin, View):
-    def get(self, request, pk, *args, **kwargs):
-        question = Pertanyaan.objects.get(pk=pk)
-        form = AnswerForm()
-
-        context = {
-            'pertanyaan': question,
-            'form': form,
-        }
-
-        return render(request, 'forum/jawaban_form.html', context)
-
-    def post(self, request, pk, *args, **kwargs):
-        question = Pertanyaan.objects.get(pk=pk)
-        form = AnswerForm(request.POST)
-
-        if form.is_valid():
-            new_answer = form.save(commit=False)
-            new_answer.author = request.user
-            new_answer.pertanyaan_asal = question
-            new_answer.save()
-        
-        form = AnswerForm()
-        comment = Komentar.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
-        answer = Jawaban.objects.filter(pertanyaan_asal=question).order_by('-waktu_upload')
-
-        context = {
-            'pertanyaan': question,
-            'form': form,
-            'komentar': comment,
-            'jawaban': answer,
-        }
-
-        return render(request, 'forum/jawaban_form.html', context)
-'''
 
 class AnswerCreateView(LoginRequiredMixin, CreateView):
     model = Jawaban
-    #template_name = 'home/comment-form.html'
     fields = ['konten', 'snippet']
 
     def get_context_data(self, **kwargs):
-        context = super(AnswerCreateView, self).get_context_data(**kwargs)
-        context['pertanyaan'] = Pertanyaan.objects.get(pk=7)
+        context = super().get_context_data(**kwargs)
+        context['question_pk'] = self.kwargs['pk']
+        context['pertanyaan'] = get_object_or_404(Pertanyaan, pk=self.kwargs['pk'])
         return context
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        form.instance.pertanyaan_asal = get_object_or_404(Pertanyaan, pk=self.kwargs['pk'])
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('forum-question-detail', args=[self.kwargs['pk']])
+
+'''
 
 class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Pertanyaan
@@ -186,6 +133,7 @@ class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == question.author:
             return True
         return False
+'''
 
 # Kalau mau dibuka, harus login dulu
 
@@ -198,14 +146,18 @@ def my_questions(request):
 
 @login_required
 def my_answers(request):
+    answers = Jawaban.objects.filter(author=request.user)
+
     context = {
-        'jawaban': Jawaban.objects.filter(author=request.user),
+        'jawaban': answers,
     }
     return render(request, 'forum/my_answers.html', context)
 
 @login_required
 def my_comments(request):
+    comments = Komentar.objects.filter(author=request.user)
+
     context = {
-        'komentar': Komentar.objects.filter(author=request.user),
+        'komentar': comments,
     }
     return render(request, 'forum/my_comments.html', context)
