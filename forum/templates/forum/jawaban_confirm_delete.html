@@ -1,0 +1,23 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Delete answer</legend>
+                <h2>Are you sure you want to delete this answer?</h2>
+                <div>
+                    <p>{{jawaban.konten}}</p>
+                    {% if jawaban.snippet %}
+                        <pre class="content-section code">{{jawaban.snippet}}</pre>
+                    {% endif %}
+                    <p>Posted by {{jawaban.author}} at {{jawaban.waktu_upload}}</p>
+                </div>
+            </fieldset>
+            <div>
+                <button class="btn btn-outline-danger" type="submit">Delete</button>
+                <a class="btn btn-outline-primary" href="{% url 'forum-my-answers'%}">Cancel</a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

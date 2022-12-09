@@ -46,6 +46,8 @@
                 <pre class="content-section code">{{answer.snippet}}</pre>
             {% endif %}
             <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
+        {% empty %}
+            <h3>No one has posted an answer yet</h3>
         {% endfor %}
     </div>
 

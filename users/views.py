@@ -14,9 +14,3 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
-
-# Kalau mau dibuka, harus login dulu
-
-@login_required
-def profile(request):
-    return render(request, 'users/profile.html')

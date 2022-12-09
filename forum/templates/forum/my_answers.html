@@ -5,9 +5,10 @@
             {% with pertanyaan=answer.pertanyaan_asal %}
                 <div class="content-section zoom">
                     <div>
-                        <h1>{{answer.judul}}</h1>
                         <p>{{answer.konten}}</p>
-                        <pre>{{answer.snippet}}</pre>
+                        {% if answer.snippet %}
+                            <pre class="content-section code">{{answer.snippet}}</pre>
+                        {% endif %}
                         <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
                     </div>
                     <h4>Original Question:</h4>
@@ -19,6 +20,8 @@
                         <h2><a class="article-title" href="{% url 'forum-question-detail' pertanyaan.id %}">{{ pertanyaan.judul }}</a></h2>
                         <p class="article-content">{{ pertanyaan.konten|stringformat:".100s" }}</p>
                     </div>
+                    <a class="btn btn-outline-primary mr-2" href="{% url 'forum-answer-update' answer.id %}">Edit</a>
+                    <a class="btn btn-outline-danger" href="{% url 'forum-answer-delete' answer.id %}">Delete</a>
                 </div>
             {% endwith %}
         {% empty %}

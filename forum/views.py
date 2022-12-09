@@ -7,16 +7,6 @@ from .models import Pertanyaan, Jawaban, Komentar
 from .forms import CommentForm, AnswerForm
 
 
-def search(request):
-    if request.method == 'POST':
-        context = {
-            'pertanyaan': Pertanyaan.objects.filter(judul__icontains=request.POST['search']),
-        }
-        print(context)
-        return render(request, 'forum/search.html', context)
-    return redirect(reverse('forum-index'))
-
-
 # class based
 
 class QuestionListView(ListView):
@@ -118,36 +108,118 @@ class AnswerCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('forum-question-detail', args=[self.kwargs['pk']])
 
-'''
-
 class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Pertanyaan
-    fields = ['judul', 'konten', 'snippet']
+    model = Jawaban
+    fields = ['konten', 'snippet']
+    template_name = 'forum/jawaban_form_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['jawaban'] = get_object_or_404(Jawaban, pk=self.kwargs['pk'])
+        return context
     
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
     def test_func(self):
-        question = self.get_object()
-        if self.request.user == question.author:
+        answer = self.get_object()
+        if self.request.user == answer.author:
             return True
         return False
-'''
 
-# Kalau mau dibuka, harus login dulu
+    def get_success_url(self):
+        answer = get_object_or_404(Jawaban, pk=self.kwargs['pk'])
+        question = get_object_or_404(Pertanyaan, pk=answer.pertanyaan_asal.pk)
+        return reverse('forum-question-detail', args=[question.pk])
+
+class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Jawaban
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['jawaban'] = get_object_or_404(Jawaban, pk=self.kwargs['pk'])
+        return context
+
+    def test_func(self):
+        answer = self.get_object()
+        if self.request.user == answer.author:
+            return True
+        return False
+    
+    def get_success_url(self):
+        answer = get_object_or_404(Jawaban, pk=self.kwargs['pk'])
+        question = get_object_or_404(Pertanyaan, pk=answer.pertanyaan_asal.pk)
+        return reverse('forum-question-detail', args=[question.pk])
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Komentar
+    fields = ['konten']
+    template_name = 'forum/komentar_form_update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['komentar'] = get_object_or_404(Komentar, pk=self.kwargs['pk'])
+        return context
+    
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.author:
+            return True
+        return False
+
+    def get_success_url(self):
+        comment = get_object_or_404(Komentar, pk=self.kwargs['pk'])
+        question = get_object_or_404(Pertanyaan, pk=comment.pertanyaan_asal.pk)
+        return reverse('forum-question-detail', args=[question.pk])
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Komentar
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['komentar'] = get_object_or_404(Komentar, pk=self.kwargs['pk'])
+        return context
+
+    def test_func(self):
+        comment = self.get_object()
+        if self.request.user == comment.author:
+            return True
+        return False
+    
+    def get_success_url(self):
+        comment = get_object_or_404(Komentar, pk=self.kwargs['pk'])
+        question = get_object_or_404(Pertanyaan, pk=comment.pertanyaan_asal.pk)
+        return reverse('forum-question-detail', args=[question.pk])
+
+# function based
+
+def search(request):
+    if request.method == 'POST':
+        context = {
+            'pertanyaan': Pertanyaan.objects.filter(judul__icontains=request.POST['search']),
+        }
+        print(context)
+        return render(request, 'forum/search.html', context)
+    return redirect(reverse('forum-index'))
+
+# kalau mau dibuka, harus login dulu
 
 @login_required
 def my_questions(request):
+    questions = Pertanyaan.objects.filter(author=request.user).order_by('-waktu_upload')
     context = {
-        'pertanyaan': Pertanyaan.objects.filter(author=request.user),
+        'pertanyaan': questions,
     }
     return render(request, 'forum/my_questions.html', context)
 
 @login_required
 def my_answers(request):
-    answers = Jawaban.objects.filter(author=request.user)
-
+    answers = Jawaban.objects.filter(author=request.user).order_by('-waktu_upload')
     context = {
         'jawaban': answers,
     }
@@ -155,9 +227,17 @@ def my_answers(request):
 
 @login_required
 def my_comments(request):
-    comments = Komentar.objects.filter(author=request.user)
-
+    comments = Komentar.objects.filter(author=request.user).order_by('-waktu_upload')
     context = {
         'komentar': comments,
     }
     return render(request, 'forum/my_comments.html', context)
+
+@login_required
+def profile(request):
+    context = {
+        'questions_asked': len(Pertanyaan.objects.filter(author=request.user)),
+        'answers_given': len(Jawaban.objects.filter(author=request.user)),
+        'comments_made': len(Komentar.objects.filter(author=request.user)),
+    }
+    return render(request, 'forum/profile.html', context)

@@ -1,0 +1,28 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    {% with pertanyaan=jawaban.pertanyaan_asal %}
+        <div class="content-section">
+            <div class="container">
+                <div class="question">
+                    <h1>{{pertanyaan.judul}}</h1>
+                    <p>{{pertanyaan.konten}}</p>
+                    {% if pertanyaan.snippet %}
+                        <pre class="content-section code">{{pertanyaan.snippet}}</pre>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div>
+            <form class="content-section border-secondary" action="{% url 'forum-answer-update' jawaban.pk %}" method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Make an answer</legend>
+                    {{ form.as_p }}
+                </fieldset>
+                <div>
+                    <button class="btn btn-outline-primary" type="submit">Post</button>
+                </div>
+            </form>
+        </div>
+    {% endwith %}
+{% endblock content %}

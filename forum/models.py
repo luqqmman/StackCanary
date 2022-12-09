@@ -23,6 +23,9 @@ class Jawaban(models.Model):
     snippet = models.TextField(default=None, blank=True, null=True)
     waktu_upload = models.DateTimeField(default=timezone.now)
 
+    def get_absolute_url(self):
+        return reverse('forum-question-detail', kwargs={'pk': self.pk})
+
 class Komentar(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     pertanyaan_asal = models.ForeignKey(Pertanyaan, on_delete=models.CASCADE)

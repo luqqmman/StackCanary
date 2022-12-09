@@ -18,6 +18,8 @@
                         <h2><a class="article-title" href="{% url 'forum-question-detail' pertanyaan.id %}">{{ pertanyaan.judul }}</a></h2>
                         <p class="article-content">{{ pertanyaan.konten|stringformat:".100s" }}</p>
                     </div>
+                    <a class="btn btn-outline-primary mr-2" href="{% url 'forum-comment-update' comment.id %}">Edit</a>
+                    <a class="btn btn-outline-danger" href="{% url 'forum-comment-delete' comment.id %}">Delete</a>
                 </div>
             {% endwith %}
         {% empty %}

@@ -1,0 +1,17 @@
+{% extends "forum/base.html" %}
+{% block content %}
+    <h1>Hello, {{user.username}}!</h1>
+    <h3>Your contributions so far:</h3>
+    <div>
+        <h3>{{ questions_asked }}</h3>
+        <p>Questions Asked</p>
+    </div>
+    <div>
+        <h3>{{ answers_given }}</h3>
+        <p>Answers Given</p>
+    </div>
+    <div>
+        <h3>{{ comments_made }}</h3>
+        <p>Comments Made</p>
+    </div>
+{% endblock content %}
