@@ -203,7 +203,6 @@ def search(request):
         context = {
             'pertanyaan': Pertanyaan.objects.filter(judul__icontains=request.POST['search']),
         }
-        print(context)
         return render(request, 'forum/search.html', context)
     return redirect(reverse('forum-index'))
 

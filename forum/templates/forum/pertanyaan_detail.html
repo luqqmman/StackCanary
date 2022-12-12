@@ -1,54 +1,58 @@
 {% extends "forum/base.html" %}
 {% block content %}
     <div class="content-section">
-    <div class="container">
         <div class="question">
             <h1>{{pertanyaan.judul}}</h1>
+            <p class="text-muted">Posted by {{pertanyaan.author}} at {{pertanyaan.waktu_upload}}</p>
             <p>{{pertanyaan.konten}}</p>
             {% if pertanyaan.snippet %}
                 <pre class="content-section code">{{pertanyaan.snippet}}</pre>
             {% endif %}
-            <p>Posted by {{pertanyaan.author}} at {{pertanyaan.waktu_upload}}</p>
         </div>
 
-        {% if user.is_authenticated %}
-            <div class=" justify-content-center mt-3 mb-5">
-                <form method="POST" class="content-section" action="{% url 'forum-question-detail' pertanyaan.id %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-outline-primary" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        {% endif %}
+        <div class="comment-section mh-300">
+            {% if user.is_authenticated %}
+                <div class="justify-content-center mt-3 mb-2">
+                    <form method="POST" action="{% url 'forum-question-detail' pertanyaan.id %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
 
-    </div>
-    {% for comment in komentar %}
-        <div class="question">
-            <p>{{comment.konten}}</p>
-            <p>Posted by {{comment.author}} at {{comment.waktu_upload}}</p>
+            {% for comment in komentar %}
+                <div class="comment">
+                    <p class="m-0">{{comment.konten}} - 
+                        <a href="#">{{comment.author}}</a> 
+                        <span class="text-muted">
+                            {{comment.waktu_upload}}
+                        </span>
+                    </p>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
     </div>
 
     <div>
-        <h3>Discussions</h3>
-        <div class="gap-2">
-            <button class="btn btn-outline-primary"><a href="{% url 'forum-answer-create' pertanyaan.id %}">Add New Answer</a></button>
-        </div>
+        <h3>Discussions / <a href="{% url 'forum-answer-create' pertanyaan.id %}">Add New Answer</a></h3>
     </div>
 
-    <div class="content-section">
-        {% for answer in jawaban %}
-            <p>{{answer.konten}}</p>
+    {% for answer in jawaban %}
+        <div class="content-section">
+            <div>
+                <a href="#">{{answer.author}}</a>
+                <small class="text-muted">{{answer.waktu_upload}}</small>
+            </div> 
+            <p class="my-2">{{answer.konten}}</p>
             {% if answer.snippet %}
-                <pre class="content-section code">{{answer.snippet}}</pre>
+                <pre class="content-section code my-2">{{answer.snippet}}</pre>
             {% endif %}
-            <p>Posted by {{answer.author}} at {{answer.waktu_upload}}</p>
-        {% empty %}
+        </div>
+    {% empty %}
             <h3>No one has posted an answer yet</h3>
-        {% endfor %}
-    </div>
+    {% endfor %}
 
 {% endblock content %}
