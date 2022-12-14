@@ -4,7 +4,7 @@
         <div class="question">
             <h1>{{pertanyaan.judul}}</h1>
             <p class="text-muted">Posted by {{pertanyaan.author}} at {{pertanyaan.waktu_upload}}</p>
-            <p>{{pertanyaan.konten}}</p>
+            <p>{{pertanyaan.konten|linebreaks}}</p>
             {% if pertanyaan.snippet %}
                 <pre class="content-section code">{{pertanyaan.snippet}}</pre>
             {% endif %}
@@ -46,7 +46,7 @@
                 <a href="#">{{answer.author}}</a>
                 <small class="text-muted">{{answer.waktu_upload}}</small>
             </div> 
-            <p class="my-2">{{answer.konten}}</p>
+            <p class="my-2">{{answer.konten|linebreaks}}</p>
             {% if answer.snippet %}
                 <pre class="content-section code my-2">{{answer.snippet}}</pre>
             {% endif %}

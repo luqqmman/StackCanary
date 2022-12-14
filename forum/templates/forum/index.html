@@ -7,7 +7,7 @@
                         <small class="text-muted">{{ question.waktu_upload }}</small>
                     </div>
                     <h2><a class="article-title" href="{% url 'forum-question-detail' question.id %}">{{ question.judul }}</a></h2>
-                    <p class="article-content">{{ question.konten|stringformat:".100s" }}</p>
+                    <p class="">{{ question.konten|stringformat:".100s" }}</p>
             </article>
         {% empty %}
             <h1>No questions have been posted yet</h1>
