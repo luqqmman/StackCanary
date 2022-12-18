@@ -81,7 +81,7 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Pertanyaan
-    success_url = '/forum/my_questions/'
+    success_url = '/my_questions/'
 
     def test_func(self):
         question = self.get_object()
